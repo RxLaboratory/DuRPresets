@@ -20,7 +20,7 @@ bl_info = {
     "description" : "Exports and imports render presets, collecting the settings from the current scene.",
     "warning" : "",
     "category" : "Render",
-    "wiki_url": ""
+    "wiki_url": "http://durpresets-docs.rainboxlab.org"
 }
 
 import bpy # pylint: disable=import-error
