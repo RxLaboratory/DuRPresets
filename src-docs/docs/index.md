@@ -12,8 +12,6 @@ When importing a preset, you can select which part of the preset has to be impor
 
 ### Software
 
-This program makes use of *FFmpeg* and *Qt*.
-
 ***DuRPresets* Copyright (c) 2019 Nicolas Dufresne**  
 
 *DuRPresets* is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 3 of the License, or (at your option) any later version.
