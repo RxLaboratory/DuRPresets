@@ -1,2 +1,2 @@
-# DuBLF_DuViews
- View tools for Blender
+# DuRPresets - Duduf Render Presets
+Render presets for Blender
