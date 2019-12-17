@@ -121,7 +121,6 @@ class DURPRESETS_OT_importPreset( bpy.types.Operator, ImportHelper ):
         layout.prop(self, "import_view_layer")
         layout.prop(self, "import_all_view_layers")
 
-
     def execute(self, context):
         scene = context.scene
         view_layer = context.view_layer
@@ -220,8 +219,9 @@ class DURPRESETS_PT_render_presets(bpy.types.Panel):
 
     def draw(self, context):
         layout = self.layout
-        layout.operator("scene.render_export_preset", text="Export")
-        layout.operator("scene.render_import_preset", text="Import")
+        row = layout.row()
+        row.operator("scene.render_export_preset", text="Export")
+        row.operator("scene.render_import_preset", text="Import")
 
 classes = (
     DURPRESETS_OT_exportPreset,
