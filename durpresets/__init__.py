@@ -15,7 +15,7 @@ bl_info = {
     "name" : "DuRPresets",
     "author" : "Nicolas 'Duduf' Dufresne",
     "blender" : (2, 81, 0),
-    "version" : (0, 0, 1),
+    "version" : (0, 0, 2),
     "location" : "Render buttons (Properties window)",
     "description" : "Exports and imports render presets, collecting the settings from the current scene.",
     "warning" : "",
@@ -34,6 +34,18 @@ from . import (
 )
 
 DUBLF_json = dublf.DUBLF_json
+
+def importViewLayerSettings( viewLayer, preset ):
+    for attr in preset["View Layer"]:
+        #ignore "use for rendering"
+        if attr == "use":
+            continue
+        if attr == "name":
+            continue
+        try:
+            setattr(viewLayer, attr, preset["View Layer"][attr])
+        except:
+            pass
 
 class DURPRESETS_OT_exportPreset( bpy.types.Operator, ExportHelper ):
     """Exports the current render settings to a JSON file."""
@@ -187,25 +199,11 @@ class DURPRESETS_OT_importPreset( bpy.types.Operator, ImportHelper ):
                     pass
         
         if self.import_view_layer:
-            for attr in renderPreset["View Layer"]:
-                #ignore "use for rendering"
-                if attr == "use":
-                    continue
-                try:
-                    setattr(view_layer, attr, renderPreset["View Layer"][attr])
-                except:
-                    pass
+            importViewLayerSettings( view_layer, renderPreset )
 
         if self.import_all_view_layers:
             for v_layer in scene.view_layers:
-                for attr in renderPreset["View Layer"]:
-                    #ignore "use for rendering"
-                    if attr == "use":
-                        continue
-                    try:
-                        setattr(v_layer, attr, renderPreset["View Layer"][attr])
-                    except:
-                        pass
+                importViewLayerSettings( v_layer, renderPreset )
 
         return {'FINISHED'}
   
