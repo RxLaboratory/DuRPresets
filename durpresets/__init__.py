@@ -15,7 +15,7 @@ bl_info = {
     "name" : "DuRPresets",
     "author" : "Nicolas 'Duduf' Dufresne",
     "blender" : (2, 81, 0),
-    "version" : (0, 0, 2),
+    "version" : (0, 0, 3),
     "location" : "Render buttons (Properties window)",
     "description" : "Exports and imports render presets, collecting the settings from the current scene.",
     "warning" : "",
@@ -56,7 +56,7 @@ class DURPRESETS_OT_exportPreset( bpy.types.Operator, ExportHelper ):
 
     # ExportHelper
     filename_ext = ".drprst"
-    filter_glob = bpy.props.StringProperty(
+    filter_glob: bpy.props.StringProperty(
             default="*.drprst;*.json;*.txt",
             options={'HIDDEN'},
             )
@@ -82,6 +82,7 @@ class DURPRESETS_OT_exportPreset( bpy.types.Operator, ExportHelper ):
         renderPreset["Display Settings"] = DUBLF_json.serialize( scene.display_settings )
         renderPreset["View Settings"] = DUBLF_json.serialize( scene.view_settings )
         renderPreset["View Layer"] = DUBLF_json.serialize( view_layer )
+        renderPreset["Playblast"] = DUBLF_json.serialize( scene.playblasyt )
 
         jsonDump = json.dumps( renderPreset, indent=4 )
         f = Path(self.filepath)
@@ -108,10 +109,12 @@ class DURPRESETS_OT_importPreset( bpy.types.Operator, ImportHelper ):
     import_eevee: bpy.props.BoolProperty( name="Eevee", default=True)
     import_workbench: bpy.props.BoolProperty( name="Workbench", default=True)
     import_image_settings: bpy.props.BoolProperty( name="Image (output)", default=True)
+    import_image_filename: bpy.props.BoolProperty( name="Replace output file name/path", default=False)
     import_ffmpeg: bpy.props.BoolProperty( name="FFmpeg", default=True)
     import_display: bpy.props.BoolProperty( name="Color Management", default=True)
     import_view_layer: bpy.props.BoolProperty( name="View Layer options", default=True)
     import_all_view_layers: bpy.props.BoolProperty( name="Apply to all view layers", default=False)
+    import_playblast_settings: bpy.props.BoolProperty( name="Playblast settings", default=False)
 
     @classmethod
     def poll(cls, context):
@@ -120,18 +123,25 @@ class DURPRESETS_OT_importPreset( bpy.types.Operator, ImportHelper ):
     def draw(self, context):
         layout = self.layout
         layout.label( text="Render settings:")
+        layout.prop(self, "import_image_filename")
         layout.prop(self, "import_render")
         layout.prop(self, "import_cycles")
         layout.prop(self, "import_eevee")
         layout.prop(self, "import_workbench")
+        layout.separator()
         layout.label( text="Output settings:")
         layout.prop(self, "import_image_settings")
         layout.prop(self, "import_ffmpeg")
+        layout.separator()
         layout.label( text="View/Display settings:")
         layout.prop(self, "import_display")
+        layout.separator()
         layout.label( text="View Layer settings:")
         layout.prop(self, "import_view_layer")
         layout.prop(self, "import_all_view_layers")
+        layout.separator()
+        layout.label( text="DuBlast addon:")
+        layout.prop(self, "import_playblast_settings")
 
     def execute(self, context):
         scene = context.scene
@@ -145,6 +155,8 @@ class DURPRESETS_OT_importPreset( bpy.types.Operator, ImportHelper ):
         if self.import_render:
             for attr in renderPreset["Render"]:
                 try:
+                    if not self.import_image_filename and attr == "filepath":
+                        continue
                     setattr(scene.render, attr, renderPreset["Render"][attr])
                 except:
                     pass
@@ -204,6 +216,14 @@ class DURPRESETS_OT_importPreset( bpy.types.Operator, ImportHelper ):
         if self.import_all_view_layers:
             for v_layer in scene.view_layers:
                 importViewLayerSettings( v_layer, renderPreset )
+
+        if self.import_playblast_settings and hasattr(scene,'playblast'):
+            for attr in renderPreset["Playblast"]:
+                try:
+                    setattr(scene.playblast, attr, renderPreset["Playblast"][attr])
+                except:
+                    pass
+
 
         return {'FINISHED'}
   
