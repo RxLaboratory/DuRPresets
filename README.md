@@ -6,6 +6,8 @@ Render presets for Blender
 
 *DuRPresets* is an add-on for *Blender* which exports and imports all render settings as external presets.
 
+*DuRPresets* also exports and imports the settings set with [*DuBlast*](https://github.com/Rainbox-dev/DuBLF_DuBlast), an add-on for quickly creating and playing playblasts.
+
 📖 A **comprehensive user documentation** is [available here](https://durpresets-docs.rainboxlab.org).
 
 🎥 You can **download the latest public version [here](https://rainboxlab.org/tools/durpresets/)**.

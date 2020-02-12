@@ -16,7 +16,7 @@ When importing a preset, you can select which part of the preset has to be impor
 
 ![Panel screenshot](img/import.png)
 
-*DuRPresets* also exports and imports the settings set with [*DuBlast*](https://rainboxlab.org), an add-on for quickly creating and playing playblasts.
+*DuRPresets* also exports and imports the settings set with [*DuBlast*](https://rainboxlab.org/tools/dublast/), an add-on for quickly creating and playing playblasts.
 
 ## License
 
