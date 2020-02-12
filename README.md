@@ -24,4 +24,4 @@ Render presets for Blender
 
 ![Menu](https://github.com/Rainbox-dev/DuBLF_DuRPresets/raw/master/docs/img/settings.png)
 
-![Import](https://github.com/Rainbox-dev/DuBLF_DuBlast/raw/master/docs/img/import.png)
+![Import](https://github.com/Rainbox-dev/DuBLF_DuRPresets/raw/master/docs/img/import.png)
