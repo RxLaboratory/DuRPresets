@@ -1,6 +1,10 @@
 # Introduction
 
+![Icon](img/durpresets.png)
+
 *DuRPresets* is an add-on for *Blender* which exports and imports all render settings as external presets.
+
+[You can download it here](https://rainboxlab.org/tools/durpresets/).
 
 These presets are stored in *JSON* files, which can be edited with any text editor.
 
@@ -10,7 +14,7 @@ When importing a preset, you can select which part of the preset has to be impor
 
 *DuRPresets* also exports and imports the settings set with [*DuBlast*](https://rainboxlab.org), an add-on for quickly creating and playing playblasts.
 
-## Licenses:
+## License
 
 ### Software
 
