@@ -15,7 +15,7 @@ bl_info = {
     "name" : "DuRPresets",
     "author" : "Nicolas 'Duduf' Dufresne",
     "blender" : (2, 81, 0),
-    "version" : (0, 0, 3),
+    "version" : (1,0,0),
     "location" : "Render buttons (Properties window)",
     "description" : "Exports and imports render presets, collecting the settings from the current scene.",
     "warning" : "",
@@ -82,7 +82,8 @@ class DURPRESETS_OT_exportPreset( bpy.types.Operator, ExportHelper ):
         renderPreset["Display Settings"] = DUBLF_json.serialize( scene.display_settings )
         renderPreset["View Settings"] = DUBLF_json.serialize( scene.view_settings )
         renderPreset["View Layer"] = DUBLF_json.serialize( view_layer )
-        renderPreset["Playblast"] = DUBLF_json.serialize( scene.playblasyt )
+        if hasattr(scene, 'playblast'):
+            renderPreset["Playblast"] = DUBLF_json.serialize( scene.playblast )
 
         jsonDump = json.dumps( renderPreset, indent=4 )
         f = Path(self.filepath)
@@ -114,7 +115,7 @@ class DURPRESETS_OT_importPreset( bpy.types.Operator, ImportHelper ):
     import_display: bpy.props.BoolProperty( name="Color Management", default=True)
     import_view_layer: bpy.props.BoolProperty( name="View Layer options", default=True)
     import_all_view_layers: bpy.props.BoolProperty( name="Apply to all view layers", default=False)
-    import_playblast_settings: bpy.props.BoolProperty( name="Playblast settings", default=False)
+    import_playblast_settings: bpy.props.BoolProperty( name="Playblast settings", default=True)
 
     @classmethod
     def poll(cls, context):

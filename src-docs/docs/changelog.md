@@ -2,6 +2,12 @@
 
 This is the list of what has changed since the first public version of *DuRPresets*.
 
+## 1.0.0
+
+### Fixes
+
+- Fixed exporting playblast options (DuBlast)
+
 ## 0.0.3
 
 ### Improvements
